@@ -16,9 +16,9 @@
         <label for="item-name">Nombre del Objeto:</label>
         <input type="text" id="item-name" placeholder="Nombre del objeto">
         <label for="item-weight">Peso del Objeto:</label>
-        <input type="text" id="item-weight" placeholder="Peso del objeto (entero positivo)">
+        <input type="text" id="item-weight" placeholder="Volumen o peso del objeto (entero positivo)">
         <label for="item-value">Valor del Objeto:</label>
-        <input type="text" id="item-value" placeholder="Valor del objeto (entero positivo)">
+        <input type="text" id="item-value" placeholder="Importancia del objeto (entero positivo)">
         <button onclick="addItem()">Agregar Objeto</button>
         <button onclick="updateItem()" style="display: none;">Actualizar Objeto</button>
       </div>
@@ -29,6 +29,7 @@
         <option value="min">Minimizar</option>
       </select>
       <button onclick="solve()">Procesar</button>
+      <button id="clear" onclick="clearInputs()">Limpiar</button>
     </div>
 
     <div id="output">

@@ -282,3 +282,26 @@ function displayResult(value, selectedItems, capacity) {
   document.getElementById('selected-items-output').innerHTML = `${selectedItemsTable}`;
   document.getElementById('total-weight-output').innerHTML = `${additionalDataOutput}`;
 }
+function clearInputs() {
+  capacityInput.value = '';
+  itemNameInput.value = '';
+  itemValueInput.value = '';
+  itemWeightInput.value = '';
+  items.length = 0; // Clear the array of created items
+  isEditMode = false;
+  editIndex = -1;
+
+  const objectsCreatedTitle = document.getElementById('objects-created-title');
+  objectsCreatedTitle.textContent = 'Objetos Creados: 0';
+
+  showItems();
+
+  const capacityOutput = document.getElementById('capacity-output');
+  capacityOutput.innerHTML = '';
+  const allItemsOutput = document.getElementById('all-items-output');
+  allItemsOutput.innerHTML = '';
+  const selectedItemsOutput = document.getElementById('selected-items-output');
+  selectedItemsOutput.innerHTML = '';
+  const totalWeightOutput = document.getElementById('total-weight-output');
+  totalWeightOutput.innerHTML = '';
+}
