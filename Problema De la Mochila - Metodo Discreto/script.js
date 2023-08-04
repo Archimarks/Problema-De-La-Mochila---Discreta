@@ -196,39 +196,56 @@ function knapsackMaximize(items, capacity) {
 
 function knapsackMinimize(items, capacity) {
   const n = items.length;
-  const totalValue = items.reduce((sum, item) => sum + item.value, 0);
-  const dp = Array.from(Array(n + 1), () => Array(totalValue + 1).fill(Number.MAX_SAFE_INTEGER)); // Use a large value instead of 0 for initialization
+  const dp = Array.from(Array(n + 1), () => Array(capacity + 1).fill(Number.MAX_SAFE_INTEGER));
+  const selectedOneOfEach = Array(n).fill(false);
 
-  dp[0][0] = 0; // Base case
+  for (let i = 0; i <= n; i++) {
+    dp[i][0] = 0; // Inicializamos la primera columna de la matriz dp con 0.
+  }
 
   for (let i = 1; i <= n; i++) {
-    for (let v = 0; v <= totalValue; v++) {
-      for (let q = 0; q * items[i - 1].value <= v; q++) {
-        dp[i][v] = Math.min(dp[i][v], dp[i - 1][v - q * items[i - 1].value] + q * items[i - 1].weight);
+    for (let w = 0; w <= capacity; w++) {
+      dp[i][w] = dp[i - 1][w]; // Inicializar con el valor anterior
+
+      for (let q = 1; q * items[i - 1].weight <= w; q++) {
+        dp[i][w] = Math.min(dp[i][w], dp[i - 1][w - q * items[i - 1].weight] + q * items[i - 1].value);
+
+        // Si seleccionamos al menos un objeto de este tipo, marcamos la bandera como verdadera
+        if (q > 0) {
+          selectedOneOfEach[i - 1] = true;
+        }
       }
     }
   }
 
-  let v = 0;
-  while (dp[n][v] <= capacity) {
-    v++;
+  // Ahora, asegurémonos de seleccionar al menos un objeto de cada tipo
+  const selectedItems = [];
+  for (let i = 0; i < n; i++) {
+    if (selectedOneOfEach[i]) {
+      selectedItems.push(items[i]);
+      capacity -= items[i].weight;
+    }
   }
 
-  const selectedItems = [];
-  for (let i = n; i > 0 && v > 0; i--) {
-    for (let q = 0; q * items[i - 1].value <= v; q++) {
-      if (dp[i][v] === dp[i - 1][v - q * items[i - 1].value] + q * items[i - 1].weight) {
+  // Luego, continuamos seleccionando objetos duplicados (como antes)
+  let i = n;
+  let w = capacity;
+  while (i > 0 && w > 0) {
+    for (let q = 1; q * items[i - 1].weight <= w; q++) {
+      if (dp[i][w] === dp[i - 1][w - q * items[i - 1].weight] + q * items[i - 1].value) {
         for (let j = 0; j < q; j++) {
           selectedItems.push(items[i - 1]);
         }
-        v -= q * items[i - 1].value;
+        w -= q * items[i - 1].weight;
         break;
       }
     }
+    i--;
   }
 
-  return { value: dp[n][totalValue], selectedItems };
+  return { value: dp[n][capacity], selectedItems };
 }
+
 
 
 
