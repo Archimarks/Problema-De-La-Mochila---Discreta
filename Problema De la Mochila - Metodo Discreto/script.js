@@ -147,6 +147,9 @@ function knapsackMaximize(items, capacity) {
   const dp = Array.from(Array(n + 1), () => Array(capacity + 1).fill(0));
   const selectedItems = [];
 
+  // Creamos una matriz para rastrear si hemos seleccionado al menos un objeto de cada tipo
+  const selectedOneOfEach = Array(n).fill(false);
+
   for (let i = 1; i <= n; i++) {
     for (let w = 1; w <= capacity; w++) {
       for (let q = 0; q <= Math.floor(w / items[i - 1].weight); q++) {
@@ -154,10 +157,24 @@ function knapsackMaximize(items, capacity) {
           dp[i][w],
           dp[i - 1][w - q * items[i - 1].weight] + q * items[i - 1].value
         );
+
+        // Si seleccionamos al menos un objeto de este tipo, marcamos la bandera como verdadera
+        if (q > 0) {
+          selectedOneOfEach[i - 1] = true;
+        }
       }
     }
   }
 
+  // Ahora, asegurémonos de seleccionar al menos un objeto de cada tipo
+  for (let i = 0; i < n; i++) {
+    if (selectedOneOfEach[i]) {
+      selectedItems.push(items[i]);
+      capacity -= items[i].weight;
+    }
+  }
+
+  // Luego, continuamos seleccionando objetos duplicados (como antes)
   let i = n;
   let w = capacity;
   while (i > 0 && w > 0) {
@@ -175,6 +192,7 @@ function knapsackMaximize(items, capacity) {
 
   return { value: dp[n][capacity], selectedItems };
 }
+
 
 function knapsackMinimize(items, capacity) {
   const n = items.length;
