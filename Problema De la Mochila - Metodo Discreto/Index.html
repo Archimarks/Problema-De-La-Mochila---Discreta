@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Problema de la Mochila - Programación Dinámica</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Problema de la Mochila - Programación Dinámica</h1>
+    <div class="input-section">
+      <label for="capacity">Tamaño de la Mochila:</label>
+      <input type="text" id="capacity" placeholder="Capacidad de la Mochila (entero positivo)">
+      
+      <div id="items">
+        <label for="item-name">Nombre del Objeto:</label>
+        <input type="text" id="item-name" placeholder="Nombre del objeto">
+        <label for="item-weight">Peso del Objeto:</label>
+        <input type="text" id="item-weight" placeholder="Peso del objeto (entero positivo)">
+        <label for="item-value">Valor del Objeto:</label>
+        <input type="text" id="item-value" placeholder="Valor del objeto (entero positivo)">
+        <button onclick="addItem()">Agregar Objeto</button>
+        <button onclick="updateItem()" style="display: none;">Actualizar Objeto</button>
+      </div>
+      
+      <label for="optimization">Optimización:</label>
+      <select id="optimization">
+        <option value="max">Maximizar</option>
+        <option value="min">Minimizar</option>
+      </select>
+      <button onclick="solve()">Procesar</button>
+    </div>
+
+    <div id="output">
+      <h2 id="objects-created-title">Objetos Creados: 0</h2>
+      <p id="result"></p>
+      <p id="selected-items"></p>
+      <div id="additional-data">
+        <p id="capacity-output"></p>
+        <div id="all-items-output"></div>
+        <div id="selected-items-output"></div>
+        <p id="total-weight-output"></p>
+      </div>
+    </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
