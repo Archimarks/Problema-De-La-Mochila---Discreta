@@ -238,29 +238,30 @@ function displayResult(value, selectedItems, capacity) {
   const selectedWeight = selectedItems.reduce((sum, item) => sum + item.weight, 0);
 
   const allItemsTable = `
-      <h2>Respuesta</h2>
-      <p>Peso máximo: ${capacityInput.value}</p>
-      <h2>Todos los Objetos:</h2>
-      <table>
-        <tr><th>Nombre</th><th>Peso</th><th>Valor</th></tr>
-        ${allItemsList.join('')}
-      </table>
-    `;
-  const selectedItemsTable = `
-      <h2>Objetos seleccionados:</h2>
-      <table>
-        <tr><th>Nombre</th><th>Peso</th><th>Valor</th></tr>
-        ${selectedItemsList.join('')}
-      </table>
-    `;
-  const itemsInBackpackTable = selectedItems.length > 0 ? selectedItemsTable : '<h2>Respuesta - Ninguno</h2>';
+    <h2>Respuesta</h2>
+    <p>Peso máximo: ${capacityInput.value}</p>
+    <h2>Todos los Objetos:</h2>
+    <table>
+      <tr><th>Nombre</th><th>Peso</th><th>Valor</th></tr>
+      ${allItemsList.join('')}
+    </table>
+  `;
+  const selectedItemsTable = selectedItems.length > 0 ? `
+    <h2>Objetos seleccionados:</h2>
+    <table>
+      <tr><th>Nombre</th><th>Peso</th><th>Valor</th></tr>
+      ${selectedItemsList.join('')}
+    </table>
+  ` : '<h2>Respuesta - Ninguno</h2>';
+  
+  const totalValue = selectedItems.reduce((sum, item) => sum + item.value, 0);
   const additionalDataOutput = `
-      <h2>Respuesta - Datos adicionales</h2>
-      <p>Peso total en la mochila: ${selectedWeight}</p>
-      <p>Valor total en la mochila: ${value}</p>
-    `;
+    <h2>Respuesta - Datos adicionales</h2>
+    <p>Peso total en la mochila: ${selectedWeight}</p>
+    <p>Valor total en la mochila: ${totalValue}</p>
+  `;
 
   document.getElementById('capacity-output').innerHTML = `${allItemsTable}`;
-  document.getElementById('selected-items-output').innerHTML = `${itemsInBackpackTable}`;
+  document.getElementById('selected-items-output').innerHTML = `${selectedItemsTable}`;
   document.getElementById('total-weight-output').innerHTML = `${additionalDataOutput}`;
 }
